@@ -13,7 +13,4 @@ problem4.bin: problem4.cpp
 	g++ -o bin4 problem4.cpp
 
 clean:
-	rm -rf bin1
-	rm -rf bin2
-	rm -rf bin3
-	rm -rf bin4
+	rm -f bin*

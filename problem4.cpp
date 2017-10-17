@@ -6,6 +6,8 @@
 #include <set>
 #include <map>
 
+#include "tests4.h"
+
 using namespace std;
 
 #define KING_REQ 2
@@ -95,23 +97,39 @@ bool is_king(const string start, const unsigned vcount, map<string, set<string>>
 	return R.size() == vcount;
 }
 
-int main(int argc, char ** argv) {
-	// circular graph with only 3 vertices
-	// all vertices are King's
-	vector<string> V = { "A", "B", "C" };
-	vector<tuple<string, string>> E = {
-		make_tuple("A", "B"),
-		make_tuple("B", "C"),
-		make_tuple("B", "A")
-	};
+/* --------------
+ * Main & Testing
+ * -------------- */
+
+void test(string name, vector<tuple<string, string>> E) {
+	cout << "TEST: " << name << endl;
+
+	// construct the vector of vertices by searching for 
+	// all nodes present in the list of edges
+	set<string> _V;
+	for (auto e : E) {
+		_V.insert(get<0>(e));
+		_V.insert(get<1>(e));
+	}
+	vector<string> V(_V.begin(), _V.end());
 
 	auto N = get_neighbors(V, E);
-
+	cout << "KINGS: { ";
 	for (auto v : V) {
 		if (is_king(v, V.size(), N)) {
-			cout << "KING: " << v << endl;
+			cout << v << " ";
 		}
 	}
+	cout << "}" << endl;
 
+	cout << "-----------------------------------" << endl << endl;
+}
+
+int main(int argc, char ** argv) {
+	test("E0", E0);
+	test("E1", E1);
+	test("E2", E2);
+	test("E3", E3);
+	test("E4", E4);
 	return 0;
 }
